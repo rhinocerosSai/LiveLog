@@ -12,17 +12,14 @@
 
 ActiveRecord::Schema.define(version: 20161127040109) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "lives", force: :cascade do |t|
     t.string   "name"
     t.date     "date"
     t.string   "place"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["date"], name: "index_lives_on_date", using: :btree
-    t.index ["name", "date"], name: "index_lives_on_name_and_date", unique: true, using: :btree
+    t.index ["date"], name: "index_lives_on_date"
+    t.index ["name", "date"], name: "index_lives_on_name_and_date", unique: true
   end
 
   create_table "playings", force: :cascade do |t|
@@ -31,9 +28,9 @@ ActiveRecord::Schema.define(version: 20161127040109) do
     t.string   "inst"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["song_id"], name: "index_playings_on_song_id", using: :btree
-    t.index ["user_id", "song_id"], name: "index_playings_on_user_id_and_song_id", unique: true, using: :btree
-    t.index ["user_id"], name: "index_playings_on_user_id", using: :btree
+    t.index ["song_id"], name: "index_playings_on_song_id"
+    t.index ["user_id", "song_id"], name: "index_playings_on_user_id_and_song_id", unique: true
+    t.index ["user_id"], name: "index_playings_on_user_id"
   end
 
   create_table "songs", force: :cascade do |t|
@@ -47,7 +44,7 @@ ActiveRecord::Schema.define(version: 20161127040109) do
     t.datetime "updated_at",             null: false
     t.integer  "status",     default: 1
     t.text     "comment"
-    t.index ["live_id"], name: "index_songs_on_live_id", using: :btree
+    t.index ["live_id"], name: "index_songs_on_live_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -70,11 +67,8 @@ ActiveRecord::Schema.define(version: 20161127040109) do
     t.boolean  "public",            default: false
     t.string   "url"
     t.text     "intro"
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["furigana"], name: "index_users_on_furigana", using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["furigana"], name: "index_users_on_furigana"
   end
 
-  add_foreign_key "playings", "songs"
-  add_foreign_key "playings", "users"
-  add_foreign_key "songs", "lives"
 end

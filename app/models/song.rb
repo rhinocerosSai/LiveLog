@@ -31,7 +31,7 @@ class Song < ApplicationRecord
 
   def self.search(query, page) # TODO: Improve
     q = "%#{query}%"
-    where('songs.name ILIKE ? OR artist ILIKE ?', q, q)
+    where('songs.name LIKE ? OR artist LIKE ?', q, q)
       .order_by_live
       .paginate(page: page)
   end
